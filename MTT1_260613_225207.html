@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modernisation Tension Theory (MTT)</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+mttRose: '#f472b6',
+mttPurple: '#a78bfa',
+mttTeal: '#22d3ee',
+mttDark: '#0f172a',
+mttLight: '#fcfbf9',
+mttAnalogyBg: '#f1f5f9'
+},
+fontFamily: {
+sansEn: ['Inter', 'sans-serif'],
+headEn: ['Outfit', 'sans-serif'],
+sansAr: ['IBM Plex Sans Arabic', 'sans-serif']
+}
+}
+}
+}
+</script>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- FontAwesome for solid academic icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+.fade-transition {
+transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.mesh-gradient-bg {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 0;
+overflow: hidden;
+pointer-events: none;
+}
+.blob {
+position: absolute;
+border-radius: 50%;
+filter: blur(140px);
+opacity: 0.45;
+mix-blend-mode: multiply;
+animation: floatBlob 20s infinite alternate;
+}
+@keyframes floatBlob {
+0% { transform: translate(0px, 0px) scale(1); }
+50% { transform: translate(40px, -60px) scale(1.1); }
+100% { transform: translate(-20px, 40px) scale(0.9); }
+}
+::-webkit-scrollbar {
+width: 8px;
+}
+::-webkit-scrollbar-track {
+background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+background: #cbd5e1;
+border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #a1a1aa;
+}
+</style>
+</head>
+<body class="bg-mttLight text-[#334155] font-sansEn min-h-screen relative overflow-x-hidden selection:bg-pink-100">
+<!-- Mesh Gradient Blobs -->
+<div class="mesh-gradient-bg">
+<div class="blob bg-pink-300 w-[500px] h-[500px] top-[-10%] left-[-5%]"></div>
+<div class="blob bg-violet-300 w-[600px] h-[600px] top-[30%] right-[-10%] animate-delay-1000"></div>
+<div class="blob bg-cyan-200 w-[450px] h-[450px] bottom-[-10%] left-[20%] animate-delay-2000"></div>
+</div>
+<!-- Navigation Header -->
+<header class="sticky top-0 z-50 backdrop-blur-md bg-mttLight/70 border-b border-pink-100/40 transition-all duration-300">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<a href="#" class="flex items-center gap-3">
+<span class="w-10 h-10 rounded-full bg-gradient-to-tr from-mttRose to-mttPurple flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-pink-200">
+M
+</span>
+<span class="font-headEn font-bold text-xl tracking-tight text-mttDark">
+MTT <span class="text-mttRose text-xs font-normal align-super">Theory</span>
+</span>
+</a>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+<a href="#problem" class="hover:text-mttRose transition-colors duration-200 lang-en">The Problem</a>
+<a href="#problem" class="hover:text-mttRose transition-colors duration-200 lang-ar hidden font-sansAr">المشكلة</a>
+<a href="#analogy" class="hover:text-mttRose transition-colors duration-200 lang-en">The Analogy</a>
+<a href="#analogy" class="hover:text-mttRose transition-colors duration-200 lang-ar hidden font-sansAr">تشبيه يفتح الفكرة</a>
+<a href="#claim" class="hover:text-mttRose transition-colors duration-200 lang-en">Core Claim</a>
+<a href="#claim" class="hover:text-mttRose transition-colors duration-200 lang-ar hidden font-sansAr">الادعاء المركزي</a>
+<a href="#layers" class="hover:text-mttRose transition-colors duration-200 lang-en">The Two Layers</a>
+<a href="#layers" class="hover:text-mttRose transition-colors duration-200 lang-ar hidden font-sansAr">الطبقتان البنيويتان</a>
+<a href="#simulator" class="hover:text-mttRose transition-colors duration-200 lang-en">Tension Simulator</a>
+<a href="#simulator" class="hover:text-mttRose transition-colors duration-200 lang-ar hidden font-sansAr">محاكي التوتر</a>
+<a href="#case" class="hover:text-mttRose transition-colors duration-200 lang-en">Judicial AI</a>
+<a href="#case" class="hover:text-mttRose transition-colors duration-200 lang-ar hidden font-sansAr">الذكاء الاصطناعي القضائي</a>
+</nav>
+<button id="lang-switch-btn" onclick="setLanguage('ar')" class="flex items-center gap-2 px-4 py-2 bg-white/80 border border-pink-200/50 hover:border-mttRose/60 hover:bg-white rounded-full text-sm font-medium text-slate-700 shadow-sm transition-all duration-300">
+العربية <i class="fa-solid fa-globe text-mttRose"></i>
+</button>
+</div>
+</div>
+</header>
+<main class="relative z-10 max-w-7xl mx-auto px-6 py-12">
+<!-- HERO SECTION -->
+<section class="min-h-[75vh] flex flex-col justify-center items-center text-center py-12">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/50 border border-pink-200/40 text-mttRose text-xs font-semibold uppercase tracking-wider mb-8">
+<span class="w-1.5 h-1.5 rounded-full bg-mttRose animate-pulse"></span>
+<span class="lang-en">Theoretical Framework</span>
+<span class="lang-ar hidden font-sansAr">إطار عمل نظري مقترح</span>
+</div>
+<h1 class="font-headEn font-extrabold text-5xl md:text-7xl text-mttDark tracking-tight leading-none mb-6 max-w-5xl">
+<span class="lang-en bg-gradient-to-r from-mttDark via-mttRose to-mttPurple bg-clip-text text-transparent">Modernisation Tension Theory (MTT)</span>
+<span class="lang-ar hidden font-sansAr bg-gradient-to-r from-mttDark via-mttRose to-mttPurple bg-clip-text text-transparent leading-snug">نظرية التوتر التحديثي</span>
+</h1>
+<p class="text-lg md:text-2xl text-slate-600 max-w-4xl font-light mb-10 leading-relaxed">
+<span class="lang-en">A Framework for Understanding Why Societies Modernise Differently — and What This Means for AI</span>
+<span class="lang-ar hidden font-sansAr">إطار سوسيولوجي لفهم تباين مسارات التحديث المجتمعي — وأثر ذلك على تبني تقنيات الذكاء الاصطناعي</span>
+</p>
+<div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+<a href="#problem" class="px-8 py-4 bg-mttDark hover:bg-slate-800 text-white rounded-full font-medium shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+<span class="lang-en">Explore Framework <i class="fa-solid fa-arrow-right ml-2 text-pink-300"></i></span>
+<span class="lang-ar hidden font-sansAr">استكشف الإطار النظري <i class="fa-solid fa-arrow-left mr-2 text-pink-300"></i></span>
+</a>
+<a href="#citation" class="px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-full font-medium shadow-sm transition-all duration-300">
+<span class="lang-en"><i class="fa-solid fa-quote-right mr-2 text-mttPurple"></i> Cite This Paper</span>
+<span class="lang-ar hidden font-sansAr"><i class="fa-solid fa-quote-right ml-2 text-mttPurple"></i> اقتباس البحث</span>
+</a>
+</div>
+</section>
+<!-- THE PROBLEM SECTION -->
+<section id="problem" class="py-20 scroll-mt-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-5 relative">
+<div class="aspect-square rounded-3xl bg-gradient-to-tr from-pink-100 to-violet-100 p-8 flex flex-col justify-between border border-white relative shadow-inner overflow-hidden">
+<div class="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
+<div class="relative z-10 w-24 h-24 rounded-full border-[10px] border-mttRose/20 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border-4 border-mttPurple/40 flex items-center justify-center">
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-mttRose to-mttPurple"></div>
+</div>
+</div>
+<div class="relative z-10">
+<span class="text-6xl font-headEn font-extrabold text-pink-400 opacity-65">?</span>
+<h3 class="text-2xl font-bold text-mttDark mt-2">
+<span class="lang-en">The Core Paradox</span>
+<span class="lang-ar hidden font-sansAr">المفارقة الكبرى</span>
+</h3>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7">
+<h2 class="text-3xl font-bold text-mttDark mb-6">
+<span class="lang-en">The Problem</span>
+<span class="lang-ar hidden font-sansAr">المعضلة الأساسية</span>
+</h2>
+<p class="text-lg text-mttDark font-semibold mb-6 leading-relaxed">
+<span class="lang-en">Why do Western liberal democracies resist judicial AI while Islamic and Eastern societies embrace it — despite the common assumption that the opposite should be true?</span>
+<span class="lang-ar hidden font-sansAr">لماذا تقاوم الديمقراطيات الليبرالية الغربية إدخال الذكاء الاصطناعي في القضاء بينما تتبناه المجتمعات الإسلامية والشرقية بنشاط — على الرغم من الافتراض الشائع بأن العكس هو الصحيح؟</span>
+</p>
+<div class="space-y-4 text-slate-600 leading-relaxed text-base">
+<p class="lang-en">
+Existing explanations point to technological lag, religious conservatism, or weak civil society.
+<strong>Modernisation Tension Theory</strong> proposes something entirely different: societies do not differ in <em>whether</em> they modernise, but in <em>which layer</em> they modernise — and this choice determines everything, including how they respond to technologies that are far more culturally embedded than they appear.
+</p>
+<p class="lang-ar hidden font-sansAr">
+التفسيرات السائدة اليوم تَعزو ذلك إلى فجوات تقنية، أو تحفظات دينية، أو ضعف مؤسسات المجتمع المدني.
+ولكن <strong>نظرية التوتر التحديثي</strong> تقترح طرحاً مغايراً بالكامل: المجتمعات لا تختلف في <em>قرار</em> التحديث ذاته، بل في <em>الطبقة البنيوية</em> التي تختار تحديثها—وهذا الخيار البنيوي يحكم مسار الاستقبال والتفاعل بأكمله مع التكنولوجيا، لا سيما تلك التي تتشابك في عمق الثقافة أكثر مما تبدو عليه.
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- THE ANALOGY SECTION -->
+<section id="analogy" class="py-16 px-8 md:px-12 bg-mttAnalogyBg rounded-3xl my-12 scroll-mt-24 border border-slate-200 shadow-sm">
+<div class="max-w-4xl mx-auto">
+<!-- Visual Icon Representation -->
+<div class="flex items-center justify-center gap-6 text-mttDark mb-8">
+<div class="flex flex-col items-center">
+<i class="fa-solid fa-laptop text-4xl text-mttRose"></i>
+<span class="text-xs font-semibold uppercase tracking-wider mt-1 text-slate-500">Device</span>
+</div>
+<div class="text-2xl font-bold text-slate-400">=</div>
+<div class="flex flex-col items-center">
+<i class="fa-solid fa-users text-4xl text-mttPurple"></i>
+<span class="text-xs font-semibold uppercase tracking-wider mt-1 text-slate-500">Society</span>
+</div>
+</div>
+<!-- Section Header -->
+<h2 class="text-3xl font-bold text-mttDark text-center mb-8">
+<span class="lang-en">An Analogy to Start</span>
+<span class="lang-ar hidden font-sansAr">تشبيه يفتح الفكرة</span>
+</h2>
+<!-- Section Content -->
+<div class="space-y-6 text-slate-700 text-base leading-relaxed">
+<!-- English Paragraphs -->
+<div class="lang-en space-y-6">
+<p>Every computer has two inseparable components: <strong class="text-mttDark uppercase tracking-wider text-sm">hardware</strong> — the physical machine, the screen, the circuits, the built environment of the device — and <strong class="text-mttRose">software</strong> — the operating system, the values embedded in the code, the logic of how the machine thinks and relates.</p>
+<p>MTT proposes that human societies operate by the same structural logic. Every society has a <strong>Material Structure</strong> (its <strong class="text-mttDark uppercase tracking-wider text-sm">hardware</strong>: cities, technology, infrastructure, built environments, the body, nature) and a <strong>Relational Structure</strong> (its <strong class="text-mttRose">software</strong>: how people define family, gender roles, social authority, belonging, and justice).</p>
+<!-- Core Statement Blockquote -->
+<blockquote class="bg-white border-l-4 border-mttRose p-6 rounded-r-2xl my-6 shadow-sm">
+<p class="font-medium text-mttDark text-lg">The theory's central observation is this: <strong>societies that upgrade their <span class="text-mttRose">software</span> tend to preserve their <span class="text-mttDark">hardware</span> — and societies that upgrade their <span class="text-mttDark">hardware</span> tend to preserve their <span class="text-mttRose">software</span>.</strong> Attempting to upgrade both simultaneously risks a system crash — a crisis of meaning from which recovery is slow and often violent.</p>
+</blockquote>
+<p>Western liberal societies have been upgrading their <strong class="text-mttRose">software</strong>: redefining gender, family, identity, and individual rights at historic speed. Their <strong class="text-mttDark uppercase tracking-wider text-sm">hardware</strong> — cities, nature, heritage environments — is fiercely protected.</p>
+<p>Islamic and Eastern societies have been upgrading their <strong class="text-mttDark uppercase tracking-wider text-sm">hardware</strong>: building megacities, adopting technology, transforming their material world at remarkable pace. Their <strong class="text-mttRose">software</strong> — family structures, social roles, collective identity — remains largely preserved.</p>
+<p class="font-medium text-mttDark pt-2">This is not a value judgement. It is a structural observation. And it changes how we understand everything — including why judicial AI lands so differently on each side.</p>
+</div>
+<!-- Arabic Paragraphs -->
+<div class="lang-ar hidden font-sansAr space-y-6">
+<p>لكل حاسوب مكوّنان لا ينفصلان: <strong class="text-mttDark">الهاردوير</strong> — الجهاز المادي، الشاشة، الدوائر الإلكترونية، البيئة المبنية للآلة — و<strong class="text-mttRose">السوفت وير</strong> — نظام التشغيل، القيم المُضمَّنة في الكود، المنطق الذي يفكر به الجهاز ويتفاعل من خلاله.</p>
+<p>تقترح نظرية التوتر التحديثي أن المجتمعات الإنسانية تعمل بنفس المنطق البنيوي. لكل مجتمع <strong>بنية مادية</strong> (هاردوير: مدن، تقنية، بنية تحتية، بيئة عمرانية، جسد، طبيعة) و<strong>بنية علاقاتية</strong> (سوفت وير: كيف يُعرِّف الناس الأسرة، والجندر، والسلطة الاجتماعية، والانتماء، والعدالة).</p>
+<!-- Core Statement Blockquote -->
+<blockquote class="bg-white border-r-4 border-mttRose p-6 rounded-l-2xl my-6 shadow-sm">
+<p class="font-medium text-mttDark text-lg">الملاحظة المحورية للنظرية: <strong>المجتمعات التي تُحدِّث <span class="text-mttRose">سوفت ويرها</span> تميل إلى صون <span class="text-mttDark">هاردويرها</span> — والمجتمعات التي تُحدِّث <span class="text-mttDark">هاردويرها</span> تميل إلى صون <span class="text-mttRose">سوفت ويرها</span>.</strong> محاولة تحديث الاثنين في آنٍ واحد تُخاطر بانهيار النظام — أزمة معنى يكون التعافي منها بطيئاً ومؤلماً في الغالب.</p>
+</blockquote>
+<p>المجتمعات الغربية الليبرالية تُحدِّث <span class="text-mttRose">سوفت ويرها</span>: تُعيد تعريف الجندر والأسرة والهوية وحقوق الفرد بسرعة تاريخية غير مسبوقة. أما <span class="text-mttDark">هاردويرها</span> — المدن والطبيعة والبيئات التراثية — فيخضع لحماية صارمة.</p>
+<p>المجتمعات الإسلامية والشرقية تُحدِّث <span class="text-mttDark">هاردويرها</span>: تبني مدناً عملاقة، وتتبنى التقنية، وتُحوِّل عالمها المادي بوتيرة مذهلة. أما <span class="text-mttRose">سوفت ويرها</span> — الأسرة والأدوار الاجتماعية والهوية الجماعية — فيبقى محفوظاً إلى حدٍّ بعيد.</p>
+<p class="font-medium text-mttDark pt-2">هذا ليس حكماً قيمياً. هذه ملاحظة بنيوية. وهي تُغيِّر طريقة فهمنا لكل شيء — بما في ذلك لماذا يُستقبَل الذكاء الاصطناعي القضائي بشكل مختلف جذرياً على كلا الجانبين.</p>
+</div>
+</div>
+<!-- Section Footer / Flow Link -->
+<div class="flex justify-center mt-10 pt-4 border-t border-slate-200">
+<a href="#claim" class="inline-flex items-center gap-2 text-sm font-semibold text-mttPurple hover:text-mttRose transition-colors duration-200 group">
+<span class="lang-en">Now see the formal theory <i class="fa-solid fa-arrow-right ml-1 transition-transform duration-200 group-hover:translate-x-1"></i></span>
+<span class="lang-ar hidden font-sansAr">انتقل للإطار النظري <i class="fa-solid fa-arrow-left mr-1 transition-transform duration-200 group-hover:-translate-x-1"></i></span>
+</a>
+</div>
+</div>
+</section>
+<!-- THE CENTRAL CLAIM SECTION -->
+<section id="claim" class="py-20 scroll-mt-24">
+<div class="bg-gradient-to-br from-white to-pink-50/20 border border-pink-100 rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-b from-mttPurple/10 to-transparent rounded-full blur-xl"></div>
+<div class="max-w-4xl">
+<span class="text-xs font-bold text-mttPurple uppercase tracking-wider block mb-3">
+<span class="lang-en">Central Axiom</span>
+<span class="lang-ar hidden font-sansAr">الافتراض المحوري</span>
+</span>
+<h2 class="text-3xl font-bold text-mttDark mb-6">
+<span class="lang-en">The Central Claim</span>
+<span class="lang-ar hidden font-sansAr">الادعاء المركزي</span>
+</h2>
+<div class="space-y-6 text-slate-700 text-lg leading-relaxed">
+<p class="font-medium text-mttDark">
+<span class="lang-en">Societies face a structural constraint: the simultaneous modernisation of both their internal human order and their external material world produces a crisis of meaning that threatens social cohesion. As a result, every society — consciously or not — develops a pattern of priority: one layer is opened to transformation while the other is preserved.</span>
+<span class="lang-ar hidden font-sansAr">تواجه المجتمعات قيداً بنيوياً حتمياً: التحديث المتزامن لكل من النظام الإنساني الداخلي والعالم المادي الخارجي ينتج أزمة معنى حادة تهدد التماسك الاجتماعي. ونتيجة لذلك، يطور كل مجتمع —بوعي أو بدون وعي— نمطاً من الأولويات: يتم فتح طبقة واحدة للتحول والتغيير بينما تظل الأخرى محفوظة ومحمية.</span>
+</p>
+<p class="text-base text-slate-500">
+<span class="lang-en">This choice is not driven by religion or culture in any primary sense. It is driven by the interests of dominant actors — political elites, economic classes, professional institutions — who decide which layer serves their legitimacy. Religion and culture are then deployed to justify that choice, not to cause it.</span>
+<span class="lang-ar hidden font-sansAr">هذا الخيار ليس مدفوعاً بأساس عقائدي أو ديني في المقام الأول. بل تحركه مصالح الفاعلين المهيمنين — من نخب سياسية، طبقات اقتصادية، ومؤسسات مهنية — الذين يقررون ببراجماتية أي طبقة من الطبقتين تحقق لشرعيتهم الحماية والبقاء. ثم تُوظف الأديان والرموز الثقافية كأداة لتبرير ذلك الاختيار, لا كسبب رئيسي فيه.</span>
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- THE TWO LAYERS SECTION -->
+<section id="layers" class="py-20 scroll-mt-24">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-mttDark mb-4">
+<span class="lang-en">The Two Layers</span>
+<span class="lang-ar hidden font-sansAr">الطبقتان البنيويتان للمجتمع</span>
+</h2>
+<p class="text-slate-600 max-w-2xl mx-auto text-base">
+<span class="lang-en">The core dual-model mapping out how modernisation is distributed inside social structures.</span>
+<span class="lang-ar hidden font-sansAr">النموذج الثنائي الذي يوضح كيفية توزيع مسارات التحديث داخل الهياكل الاجتماعية.</span>
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Layer 1: Relational Structure -->
+<div class="bg-white border border-slate-100 hover:border-pink-200 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-full bg-pink-100/80 flex items-center justify-center text-mttRose mb-6 font-bold text-lg">
+01
+</div>
+<h3 class="text-2xl font-bold text-mttDark mb-4">
+<span class="lang-en">Relational Structure</span>
+<span class="lang-ar hidden font-sansAr">البنية العلاقاتية</span>
+</h3>
+<p class="text-slate-600 leading-relaxed mb-6 text-base">
+<span class="lang-en">The internal human order of a society: definitions of gender and family roles, philosophies of collective life, the meaning of belonging, intergenerational obligations, and the distribution of social authority. This is where a society produces its collective meaning and reproduces its power hierarchies.</span>
+<span class="lang-ar hidden font-sansAr">تمثل النظام الإنساني الداخلي للمجتمع: تعريف أدوار الجنسين والأسرة، فلسفات الحياة الجماعية المشتركة، معنى الهوية والانتماء، الالتزامات الأخلاقية المتبادلة بين الأجيال، وآلية توزيع السلطة الاجتماعية. في هذه الطبقة على وجه الخصوص يُنتج المجتمع معناه الجماعي ويعيد إنتاج تراتبيات القوة والسيطرة.</span>
+</p>
+</div>
+<div class="border-t border-pink-50 pt-4 text-xs font-semibold tracking-wider text-mttRose uppercase">
+<span class="lang-en"><i class="fa-solid fa-users mr-1"></i> Core Domain: Human Order & Meaning</span>
+<span class="lang-ar hidden font-sansAr"><i class="fa-solid fa-users ml-1"></i> النطاق الأساسي: النظام الإنساني والمعنى</span>
+</div>
+</div>
+<!-- Layer 2: Material Structure -->
+<div class="bg-white border border-slate-100 hover:border-violet-200 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+<div>
+<div class="w-12 h-12 rounded-full bg-violet-100/80 flex items-center justify-center text-mttPurple mb-6 font-bold text-lg">
+02
+</div>
+<h3 class="text-2xl font-bold text-mttDark mb-4">
+<span class="lang-en">Material Structure</span>
+<span class="lang-ar hidden font-sansAr">البنية المادية</span>
+</h3>
+<p class="text-slate-600 leading-relaxed mb-6 text-base">
+<span class="lang-en">The external relationship between a society and the physical world: built environments, technology, urban design, the body, nature, and climate. Technologies vary in how deeply they are entangled with the Relational Structure — from relatively neutral tools to deeply value-laden systems that directly reshape social authority and meaning.</span>
+<span class="lang-ar hidden font-sansAr">تمثل العلاقة الخارجية بين المجتمع والعالم المادية: البيئات العمرانية، التقنية البحتة، التصميم الحضري، الجسد، الطبيعة، والمناخ. وتختلف التقنيات جذرياً في مدى تشابكها أو استقلالها عن البنية العلاقاتية للمجتمع — بدءاً من الأدوات المحايدة نسبياً إلى الأنظمة العميقة المحملة بالقيم والتي تعيد هيكلة المعنى والسلطة الاجتماعية بشكل مباشر.</span>
+</p>
+</div>
+<div class="border-t border-violet-50 pt-4 text-xs font-semibold tracking-wider text-mttPurple uppercase">
+<span class="lang-en"><i class="fa-solid fa-cubes mr-1"></i> Core Domain: Physical World & Technology</span>
+<span class="lang-ar hidden font-sansAr"><i class="fa-solid fa-cubes ml-1"></i> النطاق الأساسي: العالم المادي والتقنية</span>
+</div>
+</div>
+</div>
+</section>
+<!-- INTERACTIVE SIMULATOR SECTION -->
+<section id="simulator" class="py-20 scroll-mt-24">
+<div class="bg-slate-900 text-white rounded-3xl p-8 md:p-12 shadow-xl relative overflow-hidden">
+<div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-pink-500/10 blur-3xl"></div>
+<div class="max-w-3xl mb-12">
+<span class="text-xs font-bold text-pink-400 uppercase tracking-wider block mb-3">
+<span class="lang-en">Interactive Simulation Model</span>
+<span class="lang-ar hidden font-sansAr">نموذج محاكاة تفاعلي</span>
+</span>
+<h2 class="text-3xl font-bold text-white mb-4">
+<span class="lang-en">MTT Tension Simulator</span>
+<span class="lang-ar hidden font-sansAr">محاكي التوتر البنيوي</span>
+</h2>
+<p class="text-slate-400 text-base">
+<span class="lang-en">Adjust the rates of modernisation in both layers to see how societal tension and the "Meaning Crisis" threshold behave according to the theory.</span>
+<span class="lang-ar hidden font-sansAr">اضبط معدلات التحديث والتحول في الطبقتين لترى وتفهم كيف يتولد التوتر الاجتماعي ويتحقق حد أزمة المعنى استناداً لفرضيات النظرية.</span>
+</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-6 space-y-8">
+<div>
+<div class="flex justify-between mb-2">
+<label class="text-sm font-semibold">
+<span class="lang-en">Relational Transformation Rate</span>
+<span class="lang-ar hidden font-sansAr">معدل التحول البنيوي العلاقاتي</span>
+</label>
+<span id="val-relational" class="text-pink-400 font-bold">50%</span>
+</div>
+<input type="range" id="slider-relational" min="10" max="100" value="50" oninput="calculateTension()" class="w-full accent-pink-500 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<label class="text-sm font-semibold">
+<span class="lang-en">Material Transformation Rate</span>
+<span class="lang-ar hidden font-sansAr">معدل التحول البنيوي المادي</span>
+</label>
+<span id="val-material" class="text-cyan-400 font-bold">50%</span>
+</div>
+<input type="range" id="slider-material" min="10" max="100" value="50" oninput="calculateTension()" class="w-full accent-cyan-400 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+</div>
+</div>
+<div class="lg:col-span-6 flex flex-col items-center justify-center bg-slate-950/80 border border-slate-800 rounded-2xl p-8 text-center relative">
+<div class="mb-4">
+<span class="text-xs uppercase text-slate-500 block mb-1">
+<span class="lang-en">Calculated Societal Tension</span>
+<span class="lang-ar hidden font-sansAr">مؤشر التوتر الاجتماعي المتولد</span>
+</span>
+<div id="tension-score" class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-violet-400">
+Moderate
+</div>
+</div>
+<div class="w-24 h-24 rounded-full border-4 border-slate-800 flex items-center justify-center relative overflow-hidden mb-6">
+<div id="tension-bar" class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-pink-500 to-violet-500 transition-all duration-300" style="height: 50%;"></div>
+<div class="relative z-10 text-xs font-bold text-white uppercase drop-shadow">MTT</div>
+</div>
+<div id="alert-box" class="p-3 rounded-lg text-xs font-medium w-full max-w-xs transition-all duration-300">
+<span class="lang-en">The system remains stable. The inverse pattern is maintained.</span>
+<span class="lang-ar hidden font-sansAr">النظام المجتمعي مستقر وتعمل آلية التعويض العكسي بشكل طبيعي.</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- APPLICATION CASE STUDY: JUDICIAL AI -->
+<section id="case" class="py-20 scroll-mt-24">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-mttDark mb-4">
+<span class="lang-en">Application: Judicial AI as a Test Case</span>
+<span class="lang-ar hidden font-sansAr">تطبيق عملي: الذكاء الاصطناعي القضائي كحالة اختبار</span>
+</h2>
+<p class="text-slate-600 max-w-2xl mx-auto text-base">
+<span class="lang-en">Testing the theory against counter-intuitive real-world technology adoption patterns.</span>
+<span class="lang-ar hidden font-sansAr">اختبار صحة النظرية في مواجهة مسارات تبني حقيقية تخالف التوقعات المعتادة.</span>
+</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<div class="lg:col-span-4 bg-gradient-to-tr from-pink-50 to-white border border-pink-100 p-8 rounded-3xl flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-mttRose mb-6">
+<i class="fa-solid fa-scale-balanced text-sm"></i>
+</div>
+<h3 class="text-xl font-bold text-mttDark mb-4">
+<span class="lang-en">The Judicial AI Duality</span>
+<span class="lang-ar hidden font-sansAr">ثنائية الذكاء الاصطناعي القضائي</span>
+</h3>
+<p class="text-slate-600 text-sm leading-relaxed mb-6">
+<span class="lang-en">Judicial AI is among the most culturally entangled technologies in existence. It is presented in official discourse as a material tool — an efficiency instrument. In practice, it reshapes the Relational Structure directly: it redefines who holds the authority to judge, what counts as legitimate reasoning, how accountability is distributed, and what justice means institutionally.</span>
+<span class="lang-ar hidden font-sansAr">يعد الذكاء الاصطناعي في القضاء من أكثر التقنيات تشابكاً مع الهوية والثقافة. فبينما يُطرح في الخطاب الرسمي بوصفه مجرد أداة مادية لزيادة الكفاءة، إلا أنه يعيد صياغة البنية العلاقاتية بعمق؛ إذ يعيد تحديد هوية من يملك سلطة إطلاق الأحكام، وما يعد استدلالاً قانونياً مقبولاً، وكيفية توزيع المسؤولية، وحتى مدلول العدالة مؤسسياً.</span>
+</p>
+</div>
+<div class="text-xs bg-slate-900 text-slate-300 p-3 rounded-lg flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+<span class="lang-en">Observation: Counter-intuitive adoption</span>
+<span class="lang-ar hidden font-sansAr">ملاحظة تجريبية: تبنٍ يخالف التوقعات</span>
+</div>
+</div>
+<div class="lg:col-span-4 bg-white border border-slate-100 p-8 rounded-3xl flex flex-col justify-between">
+<div>
+<div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 mb-6">
+<i class="fa-solid fa-brain text-sm"></i>
+</div>
+<h3 class="text-xl font-bold text-mttDark mb-4">
+<span class="lang-en">Conventional Explanations</span>
+<span class="lang-ar hidden font-sansAr">التفسيرات التقليدية السائدة</span>
+</h3>
+<div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+<p class="lang-en"><strong>The logic:</strong> Western societies are ethical; Eastern societies lack capacity.</p>
+<p class="lang-ar hidden font-sansAr"><strong>المنطق المتبع:</strong> تبرر ذلك بأن الغرب أكثر وعياً بأخلاقيات الذكاء الاصطناعي، بينما تعجز المجتمعات الشرقية أو الإسلامية عن مقاومة الأنظمة لضعف مجتمعها المدني.</p>
+<p class="lang-en">This assumes Eastern/Islamic societies simply lag in digital ethics, or that religious conservatism strictly stops or permits change uniformly without structural pattern.</p>
+<p class="lang-ar hidden font-sansAr">وهو ما يفترض بطريقة تبسيطية أن المجتمعات الشرقية متأخرة أخلاقياً، أو أن الاستجابة تتأثر فقط بالتدين بصورة خطية وبلا نمط واضح.</p>
+</div>
+</div>
+<div class="text-xs text-red-500 font-semibold uppercase tracking-wider pt-4 border-t border-slate-50">
+<span class="lang-en"><i class="fa-solid fa-circle-xmark mr-1"></i> Critiqued as Reductive</span>
+<span class="lang-ar hidden font-sansAr"><i class="fa-solid fa-circle-xmark ml-1"></i> تفتقر للعمق والتحليل الهيكلي</span>
+</div>
+</div>
+<div class="lg:col-span-4 bg-white border border-mttRose/30 p-8 rounded-3xl flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-mttRose/10 px-4 py-1 rounded-bl-xl text-[10px] font-bold text-mttRose uppercase tracking-wider">
+<span class="lang-en">MTT Model</span>
+<span class="lang-ar hidden font-sansAr">منظور النظرية</span>
+</div>
+<div>
+<div class="w-10 h-10 rounded-full bg-pink-100/60 flex items-center justify-center text-mttRose mb-6">
+<i class="fa-solid fa-circle-nodes text-sm"></i>
+</div>
+<h3 class="text-xl font-bold text-mttDark mb-4">
+<span class="lang-en">The MTT Perspective</span>
+<span class="lang-ar hidden font-sansAr">تفسير نظرية التوتر التحديثي</span>
+</h3>
+<div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+<p class="lang-en"><strong>In Western Societies:</strong> Dominant professional actors (judges, lawyers) invested in the Relational Structure (rights, procedural autonomy). Any tool touching this is resisted fiercely.</p>
+<p class="lang-ar hidden font-sansAr"><strong>في الغرب:</strong> الفاعلون المؤسسيون كالمحامين والقضاة استثمروا نفوذهم في بناء البنية العلاقاتية (حقوق الأفراد، استقلال القضاء). أي مساس تقني بهذه البنية يواجه بمقاومة شرسة.</p>
+<p class="lang-en"><strong>In Islamic & Eastern Societies:</strong> Elites focused change on the Material Structure, conserving the Relational Structure as their foundation of legitimacy. Hence, Judicial AI is reclassified as a material tool and absorbed easily.</p>
+<p class="lang-ar hidden font-sansAr"><strong>في الشرق والإسلام:</strong> وجهت النخب التحديث نحو البنية المادية، بينما ظلت العلاقاتية هي ركيزة شرعيتها. لذا يُعاد تأطير الذكاء الاصطناعي القضائي كأداة مادية بحتة لرفع الكفاءة، فيتم تبنيه بلا مقاومة تذكر.</p>
+</div>
+</div>
+<div class="text-xs text-mttRose font-semibold uppercase tracking-wider pt-4 border-t border-slate-50">
+<span class="lang-en"><i class="fa-solid fa-circle-check mr-1"></i> Powerful Explanatory Power</span>
+<span class="lang-ar hidden font-sansAr"><i class="fa-solid fa-circle-check ml-1"></i> قدرة تفسيرية عميقة</span>
+</div>
+</div>
+</div>
+</section>
+<!-- PHILOSOPHICAL FOUNDATIONS SECTION -->
+<section id="philosophy" class="py-20 scroll-mt-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-4">
+<span class="text-xs font-bold text-mttPurple uppercase tracking-wider block mb-3">
+<span class="lang-en">Theoretical Grounding</span>
+<span class="lang-ar hidden font-sansAr">العمق الفلسفي</span>
+</span>
+<h2 class="text-3xl font-bold text-mttDark mb-6">
+<span class="lang-en">Philosophical Foundation</span>
+<span class="lang-ar hidden font-sansAr">الأساس الفلسفي</span>
+</h2>
+<p class="text-slate-600 leading-relaxed text-base mb-6">
+<span class="lang-en">MTT is firmly grounded in Critical Realism (Bhaskar, Archer). It systematically operates across three ontological levels to explain why societies resist or embrace socio-technical systems.</span>
+<span class="lang-ar hidden font-sansAr">تتأسس نظرية التوتر التحديثي على فلسفة "الواقعية النقدية" (Critical Realism) لروي بهاسكار ومارغريت آرتشر. وتعمل بانتظام عبر ثلاثة مستويات وجودية لتفسير استقبال وتبني المجتمعات للأنظمة التقنية والاجتماعية.</span>
+</p>
+<div class="p-4 bg-slate-100 rounded-2xl flex items-center gap-3">
+<div class="w-2.5 h-2.5 rounded-full bg-mttPurple"></div>
+<span class="text-xs font-semibold text-slate-600 uppercase tracking-wider">
+<span class="lang-en">No Post-Hoc Predictions</span>
+<span class="lang-ar hidden font-sansAr">تفسير توليدي وليس تنبؤاً خطياً</span>
+</span>
+</div>
+</div>
+<div class="lg:col-span-8">
+<div class="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-sm">
+<div class="grid grid-cols-1 gap-6">
+<div class="flex flex-col md:flex-row gap-4 p-5 rounded-2xl hover:bg-slate-50 transition-colors duration-200">
+<div class="md:w-1/4">
+<span class="text-xs font-bold text-mttRose uppercase tracking-wider">01. The Real</span>
+<h4 class="text-base font-bold text-mttDark mt-1">
+<span class="lang-en">Generative Mechanisms</span>
+<span class="lang-ar hidden font-sansAr">المستوى الحقيقي (الآليات)</span>
+</h4>
+</div>
+<div class="md:w-3/4">
+<p class="text-sm text-slate-600 leading-relaxed">
+<span class="lang-en">The structural constraint on simultaneous transformation. Societies cannot change both systems at once without risking deep psychological and social collapse.</span>
+<span class="lang-ar hidden font-sansAr">القيد البنيوي المفروض على التحول والتبديل المتزامن للطبقتين. لا يمكن للمجتمع تغييرهما معاً دون تهديد البناء المعنوي وتماسك الهوية بالانهيار الفوري.</span>
+</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-4 p-5 rounded-2xl hover:bg-slate-50 transition-colors duration-200 border-t border-slate-100">
+<div class="md:w-1/4">
+<span class="text-xs font-bold text-mttPurple uppercase tracking-wider">02. The Actual</span>
+<h4 class="text-base font-bold text-mttDark mt-1">
+<span class="lang-en">Events & Patterns</span>
+<span class="lang-ar hidden font-sansAr">المستوى الفعلي (الأحداث)</span>
+</h4>
+</div>
+<div class="md:w-3/4">
+<p class="text-sm text-slate-600 leading-relaxed">
+<span class="lang-en">The patterns of priority shaped by dominant actors' interests. Societal choices and trajectories driven by elites who direct development strategically.</span>
+<span class="lang-ar hidden font-sansAr">أنماط الأولويات والخيارات الفعلية المتشكلة بناءً على مصالح وتوجهات القوى الفاعلة التي تسير عجلة التنمية في طبقة وتحمي الأخرى لشرعيتها.</span>
+</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-4 p-5 rounded-2xl hover:bg-slate-50 transition-colors duration-200 border-t border-slate-100">
+<div class="md:w-1/4">
+<span class="text-xs font-bold text-mttTeal uppercase tracking-wider">03. The Empirical</span>
+<h4 class="text-base font-bold text-mttDark mt-1">
+<span class="lang-en">Observations</span>
+<span class="lang-ar hidden font-sansAr">المستوى التجريبي (المشاهدات)</span>
+</h4>
+</div>
+<div class="md:w-3/4">
+<p class="text-sm text-slate-600 leading-relaxed">
+<span class="lang-en">The observable differences between societies in modernisation paths and technology reception. Why country A accepts legal automation while country B resists.</span>
+<span class="lang-ar hidden font-sansAr">المشاهدات والفروقات التجريبية الواقعية المرصودة بين المجتمعات في استقبال التكنولوجيا ومقاومتها أو تبنيها بصورة سريعة وسهلة.</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- WHAT MTT IS NOT SECTION -->
+<section id="not-mtt" class="py-20 scroll-mt-24">
+<div class="text-center mb-12">
+<h2 class="text-3xl font-bold text-mttDark mb-4">
+<span class="lang-en">Demystifying MTT: What It Is Not</span>
+<span class="lang-ar hidden font-sansAr">إزالة الالتباس: ما ليست عليه نظرية MTT</span>
+</h2>
+<p class="text-slate-600 max-w-2xl mx-auto text-sm">
+<span class="lang-en">To ensure strict theoretical clarity, it is crucial to address potential misreadings of the framework.</span>
+<span class="lang-ar hidden font-sansAr">لتأمين دقة الطرح النظري والأكاديمي، من المهم جداً استبعاد القراءات غير الدقيقة للنظرية.</span>
+</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white border border-slate-100 hover:border-pink-200/50 p-6 rounded-2xl transition-all duration-300">
+<div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 mb-4 font-bold">✕</div>
+<h3 class="text-lg font-bold text-mttDark mb-2">
+<span class="lang-en">Not Civilisational</span>
+<span class="lang-ar hidden font-sansAr">ليست نظرية صدام حضاري</span>
+</h3>
+<p class="text-slate-600 text-xs leading-relaxed">
+<span class="lang-en">It does not rank societies on a developmental hierarchy, nor does it claim one pattern is superior. The inverse pattern is descriptive and analytical, not normative.</span>
+<span class="lang-ar hidden font-sansAr">لا تصنف المجتمعات في تراتبية تنموية أبدية، ولا تدعي أفضلية نمط على آخر. النمط العكسي في جوهره وصفي تحليلي للآليات البنيوية، وليس معيارياً تقييمياً.</span>
+</p>
+</div>
+<div class="bg-white border border-slate-100 hover:border-pink-200/50 p-6 rounded-2xl transition-all duration-300">
+<div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 mb-4 font-bold">✕</div>
+<h3 class="text-lg font-bold text-mttDark mb-2">
+<span class="lang-en">Not Deterministic</span>
+<span class="lang-ar hidden font-sansAr">ليست حتمية جامدة</span>
+</h3>
+<p class="text-slate-600 text-xs leading-relaxed">
+<span class="lang-en">The structural constraint is real but not absolute. Social movements, political ruptures, and institutional crises can challenge the prevailing pattern and trigger tensions.</span>
+<span class="lang-ar hidden font-sansAr">القيد البنيوي حقيقي ومؤثر لكنه ليس مطلقاً كقوانين الفيزياء. الحركات والاحتجاجات الاجتماعية والهزات السياسية يمكنها زعزعة النمط وإبراز التوتر إلى السطح.</span>
+</p>
+</div>
+<div class="bg-white border border-slate-100 hover:border-pink-200/50 p-6 rounded-2xl transition-all duration-300">
+<div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-500 mb-4 font-bold">✕</div>
+<h3 class="text-lg font-bold text-mttDark mb-2">
+<span class="lang-en">Not a Religious Theory</span>
+<span class="lang-ar hidden font-sansAr">ليست نظرية دينية</span>
+</h3>
+<p class="text-slate-600 text-xs leading-relaxed">
+<span class="lang-en">The preservation of the Relational Structure is not explained by Islam or Eastern beliefs as primary causes. Religion is a legitimating tool for interests.</span>
+<span class="lang-ar hidden font-sansAr">الحفاظ على البنية العلاقاتية في المجتمعات الإسلامية لا يفسره التدين كسبب أساسي. الدين والثقافة يعملان كأداة إكساب شرعية لخيارات تحددها مصالح النفوذ.</span>
+</p>
+</div>
+</div>
+</section>
+<!-- CURRENT STAGE & CALL TO COLLABORATE -->
+<section class="py-20 bg-gradient-to-tr from-pink-50/40 via-violet-50/20 to-transparent border border-pink-100/50 rounded-3xl p-8 md:p-12 shadow-sm">
+<div class="max-w-4xl mx-auto text-center">
+<span class="text-xs font-bold text-mttRose uppercase tracking-wider block mb-3">
+<span class="lang-en">Current Stage & Future Work</span>
+<span class="lang-ar hidden font-sansAr">المرحلة الحالية وآفاق المستقبل</span>
+</span>
+<h2 class="text-3xl font-bold text-mttDark mb-6">
+<span class="lang-en">Current Stage of Development</span>
+<span class="lang-ar hidden font-sansAr">تطوير واختبار الإطار النظري</span>
+</h2>
+<p class="text-slate-600 text-base leading-relaxed mb-8">
+<span class="lang-en">The next stage of MTT development is rigorous empirical application: testing the framework against the 10-country comparative dataset currently being developed as part of doctoral research at York Law School, University of York, on AI adoption in judicial systems.</span>
+<span class="lang-ar hidden font-sansAr">المرحلة القادمة للنظرية هي الاختبار الميداني والتطبيق التجريبي الدقيق: مقارنة فرضيات الإطار النظري مقابل قاعدة بيانات تضم عشر دول، تُبنى حالياً ضمن بحث دكتوراه في كلية يورك للحقوق بجامعة يورك، يركز على تبني الذكاء الاصطناعي في المنظومات القضائية.</span>
+</p>
+<div class="inline-flex flex-col items-center gap-2 p-6 bg-white border border-pink-100 rounded-2xl max-w-lg shadow-sm">
+<div class="flex gap-2 mb-2">
+<span class="w-3 h-3 rounded-full bg-mttRose"></span>
+<span class="w-3 h-3 rounded-full bg-mttPurple"></span>
+<span class="w-3 h-3 rounded-full bg-mttTeal"></span>
+</div>
+<p class="text-sm font-semibold text-mttDark">
+<span class="lang-en">Scholars working on related questions — particularly in Intercultural Digital Ethics, postcolonial AI governance, and comparative legal technology — are invited to engage, critique, and build on this framework.</span>
+<span class="lang-ar hidden font-sansAr">الباحثون والمهتمون بقضايا الأخلاقيات الرقمية بين الثقافات، وحوكمة الذكاء الاصطناعي من منظور ما بعد الاستعمار، والتكنولوجيا القانونية المقارنة؛ مدعوون للمشاركة والتحليل والنقد والمساهمة في بناء وتطوير هذا الإطار النظري.</span>
+</p>
+</div>
+</div>
+</section>
+<!-- HOW TO CITE SECTION -->
+<section id="citation" class="py-20 scroll-mt-24">
+<div class="bg-white border border-slate-200/60 p-8 rounded-3xl shadow-sm max-w-3xl mx-auto">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-mttDark flex items-center gap-2">
+<i class="fa-solid fa-quote-right text-mttRose text-lg"></i>
+<span class="lang-en">How to Cite This Work</span>
+<span class="lang-ar hidden font-sansAr">كيفية اقتباس هذا العمل الأكاديمي</span>
+</h3>
+<span class="text-xs bg-slate-100 text-slate-500 font-mono px-2.5 py-1 rounded">APA Style</span>
+</div>
+<div class="bg-slate-50 border border-slate-100 p-6 rounded-2xl mb-6 relative">
+<p id="citation-text" class="text-sm font-mono text-slate-700 leading-relaxed text-left" dir="ltr">Barnawi, F. (2025). <em>Modernisation Tension Theory: A Framework for Understanding Differential AI Adoption Across Cultural Contexts</em>. Working Paper.</p>
+</div>
+<div class="flex justify-end">
+<button onclick="copyCitation()" class="px-6 py-2.5 bg-mttDark hover:bg-slate-800 text-white rounded-full text-xs font-semibold flex items-center gap-2 transition-all duration-300">
+<i class="fa-regular fa-copy"></i>
+<span id="copy-btn-text" class="lang-en">Copy to Clipboard</span>
+<span id="copy-btn-text-ar" class="lang-ar hidden font-sansAr">نسخ التوثيق للأكاديميين</span>
+</button>
+</div>
+</div>
+</section>
+<!-- AUTHOR / CONTACT SECTION -->
+<section class="py-20 border-t border-slate-100">
+<div class="flex flex-col items-center text-center">
+<div class="w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400 via-pink-100 to-violet-300 p-1 mb-6 shadow-md shadow-pink-100">
+<div class="w-full h-full bg-white rounded-full flex items-center justify-center font-headEn font-bold text-3xl text-slate-700">
+FB
+</div>
+</div>
+<h3 class="text-2xl font-bold text-mttDark mb-2">
+<span class="lang-en">Fatimah Barnawi</span>
+<span class="lang-ar hidden font-sansAr">فاطمة برناوي</span>
+</h3>
+<p class="text-slate-600 text-sm max-w-xl leading-relaxed mb-6">
+<span class="lang-en">PhD Researcher, York Law School, University of York
+Specializing in Intercultural Digital Ethics & Comparative Legal Technology</span>
+<span class="lang-ar hidden font-sansAr">باحثة دكتوراه في كلية يورك للحقوق، جامعة يورك
+متخصصة في الأخلاقيات الرقمية بين الثقافات والتقنية القانونية المقارنة</span>
+</p>
+<div class="flex gap-4">
+<a href="https://fatimbar.github.io/MyPhD" target="_blank" class="px-5 py-2.5 bg-white border border-slate-200 hover:border-mttRose text-slate-700 hover:text-mttRose text-xs font-semibold rounded-full flex items-center gap-2 transition-all duration-300 shadow-sm">
+<i class="fa-solid fa-graduation-cap"></i>
+<span class="lang-en">Research Profile</span>
+<span class="lang-ar hidden font-sansAr">الملف الأكاديمي للبحث</span>
+</a>
+<a href="mailto:contact@fatimbar.github.io" class="px-5 py-2.5 bg-white border border-slate-200 hover:border-mttPurple text-slate-700 hover:text-mttPurple text-xs font-semibold rounded-full flex items-center gap-2 transition-all duration-300 shadow-sm">
+<i class="fa-regular fa-envelope"></i>
+<span class="lang-en">Contact Fatimah</span>
+<span class="lang-ar hidden font-sansAr">تواصل مع الباحثة</span>
+</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="bg-white border-t border-slate-100/80 py-12 relative z-10 text-center">
+<p class="text-xs text-slate-400 font-medium">
+© 2026 Fatimah Barnawi • Modernisation Tension Theory (MTT). York Law School, University of York. All Rights Reserved.
+</p>
+</footer>
+<!-- SCRIPTS AND BILINGUAL CONTROLLER -->
+<script>
+function setLanguage(lang) {
+const enElements = document.querySelectorAll('.lang-en');
+const arElements = document.querySelectorAll('.lang-ar');
+const html = document.documentElement;
+const btn = document.getElementById('lang-switch-btn');
+if (lang === 'ar') {
+html.setAttribute('dir', 'rtl');
+html.setAttribute('lang', 'ar');
+html.style.fontFamily = "'IBM Plex Sans Arabic', 'Inter', sans-serif";
+enElements.forEach(el => el.classList.add('hidden'));
+arElements.forEach(el => el.classList.remove('hidden'));
+btn.innerHTML = 'English <i class="fa-solid fa-globe text-mttPurple"></i>';
+btn.setAttribute('onclick', "setLanguage('en')");
+} else {
+html.setAttribute('dir', 'ltr');
+html.setAttribute('lang', 'en');
+html.style.fontFamily = "'Inter', 'IBM Plex Sans Arabic', sans-serif";
+arElements.forEach(el => el.classList.add('hidden'));
+enElements.forEach(el => el.classList.remove('hidden'));
+btn.innerHTML = 'العربية <i class="fa-solid fa-globe text-mttRose"></i>';
+btn.setAttribute('onclick', "setLanguage('ar')");
+}
+calculateTension();
+}
+function copyCitation() {
+const citationText = document.getElementById('citation-text').innerText;
+const copyBtnEn = document.getElementById('copy-btn-text');
+const copyBtnAr = document.getElementById('copy-btn-text-ar');
+navigator.clipboard.writeText(citationText).then(() => {
+const isAr = document.documentElement.getAttribute('lang') === 'ar';
+if(isAr) {
+copyBtnAr.innerText = "✓ تم النسخ بنجاح!";
+setTimeout(() => { copyBtnAr.innerText = "نسخ التوثيق للأكاديميين"; }, 2500);
+} else {
+copyBtnEn.innerText = "✓ Copied Successfully!";
+setTimeout(() => { copyBtnEn.innerText = "Copy to Clipboard"; }, 2500);
+}
+}).catch(err => {
+console.error("Failed to copy text: ", err);
+});
+}
+function calculateTension() {
+const relationalVal = parseInt(document.getElementById('slider-relational').value);
+const materialVal = parseInt(document.getElementById('slider-material').value);
+document.getElementById('val-relational').innerText = relationalVal + '%';
+document.getElementById('val-material').innerText = materialVal + '%';
+const gap = Math.abs(relationalVal - materialVal);
+const totalLoad = relationalVal + materialVal;
+const scoreDisplay = document.getElementById('tension-score');
+const alertBox = document.getElementById('alert-box');
+const tensionBar = document.getElementById('tension-bar');
+tensionBar.style.height = (totalLoad / 2) + '%';
+const lang = document.documentElement.getAttribute('lang');
+if (relationalVal > 70 && materialVal > 70) {
+scoreDisplay.innerText = lang === 'ar' ? "أزمة معنى حادة!" : "Critical Meaning Crisis!";
+scoreDisplay.className = "text-5xl font-extrabold text-red-500";
+alertBox.className = "p-3 rounded-lg text-xs font-semibold w-full max-w-xs bg-red-500/20 text-red-300 border border-red-500/30";
+alertBox.innerHTML = lang === 'ar'
+? "تحذير: تجاوز التحول المتزامن قدرة المجتمع الاستيعابية مؤدياً لتفكك اجتماعي حاد."
+: "ALERT: Simultaneous transformation exceeds capacity, triggering observable societal disintegration indicators.";
+} else if (gap > 40) {
+scoreDisplay.innerText = lang === 'ar' ? "نمط حماية عكسي" : "Stable Inverse Pattern";
+scoreDisplay.className = "text-5xl font-extrabold text-cyan-400";
+alertBox.className = "p-3 rounded-lg text-xs font-semibold w-full max-w-xs bg-cyan-500/20 text-cyan-300 border border-cyan-500/30";
+alertBox.innerHTML = lang === 'ar'
+? "نجاح نمط التوازن: يفتح مجتمعنا طبقة ويحفظ الأخرى، محافظاً على السلم والتماسك."
+: "Stability Maintained: Society successfully prioritizes one layer while conserving the other.";
+} else {
+scoreDisplay.innerText = lang === 'ar' ? "توتر طبيعي / مستقر" : "Moderate Steady Tension";
+scoreDisplay.className = "text-5xl font-extrabold text-pink-400";
+alertBox.className = "p-3 rounded-lg text-xs font-medium w-full max-w-xs bg-slate-800 text-slate-300 border border-slate-700";
+alertBox.innerHTML = lang === 'ar'
+? "معدلات ضمن الحدود المقبولة والمتحكم بها، مع توترات دورية طبيعية."
+: "System behaves within acceptable temporal absorption capacities. Tension is manageable.";
+}
+}
+document.addEventListener('DOMContentLoaded', () => {
+setLanguage('en');
+calculateTension();
+});
+</script>
+</body>
+</html>
